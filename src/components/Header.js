@@ -46,7 +46,7 @@ export default function Header({ black, text, paramLocal }) {
         comedy: true,
         horror: true,
         romance: true,
-        documentary: true,
+        documentary: true
     });
 
     const handleChange = (event) => {
@@ -58,6 +58,9 @@ export default function Header({ black, text, paramLocal }) {
     const { originals, trending, toprated, action, comedy, horror, romance, documentary } = state;
     const error = [originals, trending, toprated, action, comedy, horror, romance, documentary].filter((v) => v).length < 2;
 
+    const convertChoiceCat = (num,choice) => {
+        return (choice === '1') ? true : false;
+    }
 
     useEffect(() => {
         const LoadAll = async () => {
@@ -74,6 +77,20 @@ export default function Header({ black, text, paramLocal }) {
             let _paramLocalMovieCoverGrey = await paramLocal.getParamMovieCoverGrey();
             setParamLocalMovieCoverGrey(_paramLocalMovieCoverGrey === "1" ? true : false)
 
+            //Update choice categorie movie of param local
+            let paramLocalCatMovie = JSON.parse(await paramLocal.getParamCatMovie());
+                       
+            let objLocalCatMovie = {
+                originals: convertChoiceCat(0,paramLocalCatMovie[0]),
+                trending: convertChoiceCat(1,paramLocalCatMovie[1]),
+                toprated: convertChoiceCat(2,paramLocalCatMovie[2]),
+                action: convertChoiceCat(3,paramLocalCatMovie[3]),
+                comedy: convertChoiceCat(4,paramLocalCatMovie[4]),
+                horror: convertChoiceCat(5,paramLocalCatMovie[5]),
+                romance: convertChoiceCat(6,paramLocalCatMovie[6]),
+                documentary: convertChoiceCat(7,paramLocalCatMovie[7]),
+            }
+            setState( objLocalCatMovie);
         }
         LoadAll();
     }, []);
@@ -195,19 +212,7 @@ export default function Header({ black, text, paramLocal }) {
                             <div>
                                 <ButOk variant="contained" onClick={() => {
 
-
                                     //List categorie movie
-                                    let objCheck = {
-                                        originals: originals,
-                                        trending: trending,
-                                        toprated: toprated,
-                                        action: action,
-                                        comedy: comedy,
-                                        horror: horror,
-                                        romance: romance,
-                                        documentary: documentary,
-                                    }
-
                                     let listCheck = [originals,
                                         trending,
                                         toprated,
@@ -230,15 +235,23 @@ export default function Header({ black, text, paramLocal }) {
                                         //Save cover movie grey
                                         paramLocal.setParamMovieCoverGrey((paramLocalMovieCoverGrey ? "1" : "0"));
 
-                                        //Save categorie movie
-                                        paramLocal.setParamCatMovie()
+                                        //Save choice categorie 
+                                        let objCheck = [
+                                            originals ? "1" : "0",
+                                            trending ? "1" : "0",
+                                            toprated ? "1" : "0",
+                                            action ? "1" : "0",
+                                            comedy ? "1" : "0",
+                                            horror ? "1" : "0",
+                                            romance ? "1" : "0",
+                                            documentary ? "1" : "0",
+                                        ]
+                                        paramLocal.setParamCatMovie(JSON.stringify(objCheck))
 
-                                        console.log("Update paramLocalMovieCoverGrey", (paramLocalMovieCoverGrey ? "1" : "0"))
                                         setIsMenuIco(!isMenuIco);
                                         setIsMenu(!isMenu);
 
                                         window.location.reload();
-
                                     }
 
                                 }}>{text.menuButOk}</ButOk>
