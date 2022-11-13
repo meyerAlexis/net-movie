@@ -32,7 +32,6 @@ export default function Header({ black, text, paramLocal }) {
     //Local movie cover grey
     const [paramLocalMovieCoverGrey, setParamLocalMovieCoverGrey] = useState();
     const handleChangeMovieCoverGrey = (event) => {
-        console.log("handleChangeMovieCoverGrey : ", event.target.checked)
         setParamLocalMovieCoverGrey(event.target.checked);
     };
 
@@ -58,7 +57,7 @@ export default function Header({ black, text, paramLocal }) {
     const { originals, trending, toprated, action, comedy, horror, romance, documentary } = state;
     const error = [originals, trending, toprated, action, comedy, horror, romance, documentary].filter((v) => v).length < 2;
 
-    const convertChoiceCat = (num,choice) => {
+    const convertChoiceCat = (choice) => {
         return (choice === '1') ? true : false;
     }
 
@@ -81,14 +80,14 @@ export default function Header({ black, text, paramLocal }) {
             let paramLocalCatMovie = JSON.parse(await paramLocal.getParamCatMovie());
                        
             let objLocalCatMovie = {
-                originals: convertChoiceCat(0,paramLocalCatMovie[0]),
-                trending: convertChoiceCat(1,paramLocalCatMovie[1]),
-                toprated: convertChoiceCat(2,paramLocalCatMovie[2]),
-                action: convertChoiceCat(3,paramLocalCatMovie[3]),
-                comedy: convertChoiceCat(4,paramLocalCatMovie[4]),
-                horror: convertChoiceCat(5,paramLocalCatMovie[5]),
-                romance: convertChoiceCat(6,paramLocalCatMovie[6]),
-                documentary: convertChoiceCat(7,paramLocalCatMovie[7]),
+                originals: convertChoiceCat(paramLocalCatMovie[0]),
+                trending: convertChoiceCat(paramLocalCatMovie[1]),
+                toprated: convertChoiceCat(paramLocalCatMovie[2]),
+                action: convertChoiceCat(paramLocalCatMovie[3]),
+                comedy: convertChoiceCat(paramLocalCatMovie[4]),
+                horror: convertChoiceCat(paramLocalCatMovie[5]),
+                romance: convertChoiceCat(paramLocalCatMovie[6]),
+                documentary: convertChoiceCat(paramLocalCatMovie[7]),
             }
             setState( objLocalCatMovie);
         }

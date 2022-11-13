@@ -28,11 +28,13 @@ export default () => {
     const LoadAll = async () => {
       lang.setLang(await paramLocal.getParamLang())
       // getting the full list of movies
-      let list = await Tmdb.getHomeList(lang.getLangCode(), lang.getHome());
+      let list = await Tmdb.getHomeList(lang.getLangCode(), lang.getHome(), paramLocal);
       setMovieList(list);
 
       //getting the Featured
-      let originals = list.filter(i => i.slug === 'originals');
+      /*let originals = list.filter(i => i.slug === 'originals' || i.slug === 'trending' || i.slug === 'toprated' 
+      || i.slug === 'action' || i.slug === 'comedy' || i.slug === 'horror'  || i.slug === 'documentary');*/
+      let originals = await Tmdb.getOriginal(lang.getLangCode(), lang.getHome());
       let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
       let chosen = originals[0].items.results[randomChosen];
       let chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv', lang.getLangCode());
@@ -59,9 +61,13 @@ export default () => {
     <div className="page" >
 
       <Header black={blackHeader} text={lang.getHome()} paramLocal={paramLocal} />
-      
-      {featuredData &&
+
+      {featuredData !== null ?
         <FeaturedMovie item={featuredData} lang={lang.getHome()} />
+        :
+        <div className="loading">
+          <img src={loader} alt="carregando" />
+        </div>
       }
       <section className="lists">
         {movieList.map((item, key) => (
@@ -69,7 +75,7 @@ export default () => {
         ))}
       </section>
 
-      
+
       {movieList.length <= 0 &&
         <div className="loading">
           <img src={loader} alt="carregando" />
