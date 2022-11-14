@@ -42,7 +42,7 @@ export default {
                     "1","1","1","1","1","1","1"
                 ]
             }
-            console.log("paramLocalCatMovie", paramLocalCatMovie)
+            
             if (paramLocalCatMovie[0] === "1") {
                 listHomeCat = [...listHomeCat, {
                     slug: 'originals',
@@ -110,7 +110,6 @@ export default {
             }]
         }
 
-        console.log("listHomeCat", listHomeCat)
         return listHomeCat
 
     },

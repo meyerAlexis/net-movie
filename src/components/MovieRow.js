@@ -1,11 +1,14 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/MovieRow.css';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
+import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 export default function MovieRow({ title, items, paramLocal }) {
-    const [movieCoverGrey, setMovieCoverGrey] = useState(false);
+    const [movieCoverGrey, setMovieCoverGrey] = useState("0");
+    const [styleIco, setStyleIco] = useState();
 
     const [showMovie, setShowMovie] = useState(false);
     const [movieData, setMovieData] = useState();
@@ -27,13 +30,33 @@ export default function MovieRow({ title, items, paramLocal }) {
         setScrollx(x);
     }
 
+
+    const [hover, setHover] = useState(false);
+    const onHover = () => {
+        setHover(true);
+    };
+
+    const onLeave = () => {
+        setHover(false);
+    };
+
     useEffect(() => {
         const LoadAll = async () => {
-            setMovieCoverGrey(await paramLocal.getParamMovieCoverGrey())
+            setMovieCoverGrey(await paramLocal.getParamMovieCoverGrey());
+            //let marginTop = ("-"+ Math.round(window.innerWidth * 0.3) + "px");
+
         }
         LoadAll();
+
+        setStyleIco({
+            float: "left", display: "block", fontSize: "120px",
+            marginLeft: "45%", marginTop: "-28%", position: "relative"
+        });
     }, []);
 
+    useEffect(() => {
+
+    }, [window.innerWidth]);
     return (
         <div className="movieRow" >
             <h2>{title}</h2>
@@ -66,9 +89,14 @@ export default function MovieRow({ title, items, paramLocal }) {
                     {showMovie ?
                         <div id="detail-movie" onClick={() => { setShowMovie(false) }}>
                             <article>
-                                <div>
-                                    <img src={`https://image.tmdb.org/t/p/w1280${movieData.poster_path}`} alt={movieData.original_title} />
 
+                                <img src={`https://image.tmdb.org/t/p/w1280${movieData.poster_path}`} alt={movieData.original_title} />
+
+                                <div onMouseEnter={onHover}
+                                    onMouseLeave={onLeave} 
+                                    role="button"
+                                    tabIndex="-3">
+                                    {hover ? <PlayCircleOutlineIcon sx={styleIco}/> : <PlayCircleFilledWhiteIcon sx={styleIco}/>}
                                 </div>
                                 <h4>
                                     {movieData.overview}

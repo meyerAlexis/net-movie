@@ -42,7 +42,7 @@ export default class ParamLocal {
         try {
             return await sessionStorage.getItem(this.paramMovieCoverGrey);
         } catch (error) {
-            return false;
+            return "0";
         }
     }
 
