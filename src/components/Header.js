@@ -23,6 +23,7 @@ import { ButOk } from '../styles/Button';
 
 export default function Header({ black, text, paramLocal }) {
 
+    const numMinCat = 3;
     const [isMenuIco, setIsMenuIco] = useState(true);
     const [isMenu, setIsMenu] = useState(false);
 
@@ -55,7 +56,7 @@ export default function Header({ black, text, paramLocal }) {
         });
     };
     const { originals, trending, toprated, action, comedy, horror, romance, documentary } = state;
-    const error = [originals, trending, toprated, action, comedy, horror, romance, documentary].filter((v) => v).length < 2;
+    const error = [originals, trending, toprated, action, comedy, horror, romance, documentary].filter((v) => v).length < numMinCat;
 
     const convertChoiceCat = (choice) => {
         return (choice === '1') ? true : false;
@@ -63,6 +64,7 @@ export default function Header({ black, text, paramLocal }) {
 
     useEffect(() => {
         const LoadAll = async () => {
+            try {
             //Param lang site
             let _paramLocalLang = await paramLocal.getParamLang();
             if (typeof _paramLocalLang === "string") {
@@ -78,18 +80,30 @@ export default function Header({ black, text, paramLocal }) {
 
             //Update choice categorie movie of param local
             let paramLocalCatMovie = JSON.parse(await paramLocal.getParamCatMovie());
-                       
-            let objLocalCatMovie = {
-                originals: convertChoiceCat(paramLocalCatMovie[0]),
-                trending: convertChoiceCat(paramLocalCatMovie[1]),
-                toprated: convertChoiceCat(paramLocalCatMovie[2]),
-                action: convertChoiceCat(paramLocalCatMovie[3]),
-                comedy: convertChoiceCat(paramLocalCatMovie[4]),
-                horror: convertChoiceCat(paramLocalCatMovie[5]),
-                romance: convertChoiceCat(paramLocalCatMovie[6]),
-                documentary: convertChoiceCat(paramLocalCatMovie[7]),
+                let objLocalCatMovie = {
+                    originals: convertChoiceCat(paramLocalCatMovie[0]),
+                    trending: convertChoiceCat(paramLocalCatMovie[1]),
+                    toprated: convertChoiceCat(paramLocalCatMovie[2]),
+                    action: convertChoiceCat(paramLocalCatMovie[3]),
+                    comedy: convertChoiceCat(paramLocalCatMovie[4]),
+                    horror: convertChoiceCat(paramLocalCatMovie[5]),
+                    romance: convertChoiceCat(paramLocalCatMovie[6]),
+                    documentary: convertChoiceCat(paramLocalCatMovie[7]),
+                }
+                //setState(objLocalCatMovie);
+
+            } catch (error) {
+                setState( {
+                    originals: true,
+                    trending: true,
+                    toprated: true,
+                    action: true,
+                    comedy: true,
+                    horror: true,
+                    romance: true,
+                    documentary: true
+                });
             }
-            setState( objLocalCatMovie);
         }
         LoadAll();
     }, []);
@@ -203,7 +217,7 @@ export default function Header({ black, text, paramLocal }) {
                                         />
                                     </FormGroup>
 
-                                    <FormHelperText>{text.homeErrorCatChoice}</FormHelperText>
+                                    <FormHelperText>{text.homeErrorCatChoice1}{numMinCat}{text.homeErrorCatChoice2}</FormHelperText>
                                 </FormControl>
 
                             </div>
@@ -227,7 +241,7 @@ export default function Header({ black, text, paramLocal }) {
                                     });
 
                                     //Save and close, if categorie >= 2
-                                    if (numCatValidate >= 2) {
+                                    if (numCatValidate >= numMinCat) {
                                         //Save param lang
                                         paramLocal.setParamLang(paramLocalLang);
 

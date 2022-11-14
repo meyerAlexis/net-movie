@@ -36,7 +36,8 @@ const textHome_en = {
     homeHorror: 'Terror',
     homeRomance : 'Romance',
     homeDocumentary: 'Documentaries',
-    homeErrorCatChoice : "At least 2 categories must be selected",
+    homeErrorCatChoice1 : "At least ",
+    homeErrorCatChoice2 : " categories must be selected",
 
     featuredPoints : "points",
     featuredSeasons : "season",

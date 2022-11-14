@@ -23,7 +23,7 @@ export default class ParamLocal {
         try {
             return await sessionStorage.getItem(this.paramLang);
         } catch (error) {
-            return null;
+            return "fr";
         }
     }
 
@@ -42,7 +42,7 @@ export default class ParamLocal {
         try {
             return await sessionStorage.getItem(this.paramMovieCoverGrey);
         } catch (error) {
-            return null;
+            return false;
         }
     }
 
@@ -62,7 +62,16 @@ export default class ParamLocal {
         try {
             return await sessionStorage.getItem(this.paramCatMovie);
         } catch (error) {
-            return null;
+            return {
+                originals: "1",
+                trending: "1",
+                toprated: "1",
+                action: "1",
+                comedy: "1",
+                horror: "1",
+                romance: "1",
+                documentary: "1"
+            };
         }
     }    
 }

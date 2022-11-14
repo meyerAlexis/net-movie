@@ -26,19 +26,22 @@ export default () => {
 
   useEffect(() => {
     const LoadAll = async () => {
-      lang.setLang(await paramLocal.getParamLang())
-      // getting the full list of movies
-      let list = await Tmdb.getHomeList(lang.getLangCode(), lang.getHome(), paramLocal);
-      setMovieList(list);
+      try {
+        lang.setLang(await paramLocal.getParamLang())
+        // getting the full list of movies
+        let list = await Tmdb.getHomeList(lang.getLangCode(), lang.getHome(), paramLocal);
+        setMovieList(list);
 
-      //getting the Featured
-      /*let originals = list.filter(i => i.slug === 'originals' || i.slug === 'trending' || i.slug === 'toprated' 
-      || i.slug === 'action' || i.slug === 'comedy' || i.slug === 'horror'  || i.slug === 'documentary');*/
-      let originals = await Tmdb.getOriginal(lang.getLangCode(), lang.getHome());
-      let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
-      let chosen = originals[0].items.results[randomChosen];
-      let chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv', lang.getLangCode());
-      setFeaturedData(chosenInfo);
+        //getting the Featured
+        let originals = await Tmdb.getOriginal(lang.getLangCode(), lang.getHome());
+        let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
+        let chosen = originals[0].items.results[randomChosen];
+        let chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv', lang.getLangCode());
+        setFeaturedData(chosenInfo);
+
+      } catch (error) {
+
+      }
     }
     LoadAll();
   }, []);

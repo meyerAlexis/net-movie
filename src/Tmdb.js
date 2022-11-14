@@ -35,64 +35,82 @@ export default {
 
         let paramLocalCatMovie = JSON.parse(await paramLocal.getParamCatMovie());
         let listHomeCat = [];
-        if (paramLocalCatMovie[0] === "1") {
+
+        try {
+            if ( typeof paramLocalCatMovie === "object" ) {
+                paramLocalCatMovie = [
+                    "1","1","1","1","1","1","1"
+                ]
+            }
+            console.log("paramLocalCatMovie", paramLocalCatMovie)
+            if (paramLocalCatMovie[0] === "1") {
+                listHomeCat = [...listHomeCat, {
+                    slug: 'originals',
+                    title: text.homeOriginals,
+                    items: await basicFetch(`/discover/tv?with_network=213&language=${langCode}&api_key=${API_KEY}`)
+                }]
+            }
+            if (paramLocalCatMovie[1] === "1") {
+                listHomeCat = [...listHomeCat, {
+                    slug: 'trending',
+                    title: text.homeTrending,
+                    items: await basicFetch(`/trending/all/week?language=${langCode}&api_key=${API_KEY}`)
+                }]
+            }
+            if (paramLocalCatMovie[2] === "1") {
+                listHomeCat = [...listHomeCat, {
+                    slug: 'toprated',
+                    title: text.homeToprated,
+                    items: await basicFetch(`/movie/top_rated?language=${langCode}&api_key=${API_KEY}`)
+                }]
+            }
+            if (paramLocalCatMovie[3] === "1") {
+                listHomeCat = [...listHomeCat, {
+                    slug: 'action',
+                    title: text.homeAction,
+                    items: await basicFetch(`/discover/movie?with_genres=28&language=${langCode}&api_key=${API_KEY}`)
+                }]
+            }
+            if (paramLocalCatMovie[4] === "1") {
+                listHomeCat = [...listHomeCat, {
+                    slug: 'comedy',
+                    title: text.homeComedy,
+                    items: await basicFetch(`/discover/movie?with_genres=35&language=${langCode}&api_key=${API_KEY}`)
+                }]
+            }
+            if (paramLocalCatMovie[5] === "1") {
+                listHomeCat = [...listHomeCat, {
+                    slug: 'horror',
+                    title: text.homeHorror,
+                    items: await basicFetch(`/discover/movie?with_genres=27&language=${langCode}&api_key=${API_KEY}`)
+                }]
+            }
+            if (paramLocalCatMovie[6] === "1") {
+                listHomeCat = [...listHomeCat, {
+                    slug: 'romance',
+                    title: text.homeRomance,
+                    items: await basicFetch(`/discover/movie?with_genres=10749&language=${langCode}&api_key=${API_KEY}`)
+                }]
+            }
+            if (paramLocalCatMovie[7] === "1") {
+                listHomeCat = [...listHomeCat, {
+                    slug: 'documentary',
+                    title: text.homeDocumentary,
+                    items: await basicFetch(`/discover/movie?with_genres=99&language=${langCode}&api_key=${API_KEY}`)
+                }]
+            }
+
+
+        } catch (error) {
+
             listHomeCat = [...listHomeCat, {
                 slug: 'originals',
                 title: text.homeOriginals,
                 items: await basicFetch(`/discover/tv?with_network=213&language=${langCode}&api_key=${API_KEY}`)
             }]
         }
-        if (paramLocalCatMovie[1] === "1") {
-            listHomeCat = [...listHomeCat, {
-                slug: 'trending',
-                title: text.homeTrending,
-                items: await basicFetch(`/trending/all/week?language=${langCode}&api_key=${API_KEY}`)
-            }]
-        }
-        if (paramLocalCatMovie[2] === "1") {
-            listHomeCat = [...listHomeCat, {
-                slug: 'toprated',
-                title: text.homeToprated,
-                items: await basicFetch(`/movie/top_rated?language=${langCode}&api_key=${API_KEY}`)
-            }]
-        }
-        if (paramLocalCatMovie[3] === "1") {
-            listHomeCat = [...listHomeCat, {
-                slug: 'action',
-                title: text.homeAction,
-                items: await basicFetch(`/discover/movie?with_genres=28&language=${langCode}&api_key=${API_KEY}`)
-            }]
-        }
-        if (paramLocalCatMovie[4] === "1") {
-            listHomeCat = [...listHomeCat, {
-                slug: 'comedy',
-                title: text.homeComedy,
-                items: await basicFetch(`/discover/movie?with_genres=35&language=${langCode}&api_key=${API_KEY}`)
-            }]
-        }
-        if (paramLocalCatMovie[5] === "1") {
-            listHomeCat = [...listHomeCat, {
-                slug: 'horror',
-                title: text.homeHorror,
-                items: await basicFetch(`/discover/movie?with_genres=27&language=${langCode}&api_key=${API_KEY}`)
-            }]
-        }
-        if (paramLocalCatMovie[6] === "1") {
-            listHomeCat = [...listHomeCat, {
-                slug: 'romance',
-                title: text.homeRomance,
-                items: await basicFetch(`/discover/movie?with_genres=10749&language=${langCode}&api_key=${API_KEY}`)
-            }]
-        }
-        if (paramLocalCatMovie[7] === "1") {
-            listHomeCat = [...listHomeCat, {
-                slug: 'documentary',
-                title: text.homeDocumentary,
-                items: await basicFetch(`/discover/movie?with_genres=99&language=${langCode}&api_key=${API_KEY}`)
-            }]
-        }
 
-
+        console.log("listHomeCat", listHomeCat)
         return listHomeCat
 
     },

@@ -36,7 +36,8 @@ const textHome_fr = {
     homeHorror : 'Terreur',
     homeRomance : 'Romance',
     homeDocumentary : 'Documentaires',
-    homeErrorCatChoice : "Au moins 2 catégories doivent être sélectionné",
+    homeErrorCatChoice1 : "Au moins ",
+    homeErrorCatChoice2 : " catégories doivent être sélectionné",
 
     featuredPoints : "points",
     featuredSeasons : "saison",

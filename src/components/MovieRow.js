@@ -57,7 +57,10 @@ export default function MovieRow ({ title, items }) {
                     {showMovie ?
                         <div id="detail-movie" onClick={() => { setShowMovie(false) }}>
                             <article>
+                                <div>
                                 <img src={`https://image.tmdb.org/t/p/w1280${movieData.poster_path}`} alt={movieData.original_title} />
+                                   
+                                </div>
                                 <h4>
                                     {movieData.overview}
                                 </h4>
