@@ -37,7 +37,7 @@ export default {
         let listHomeCat = [];
 
         try {
-            if ( typeof paramLocalCatMovie === "object" ) {
+            if (  paramLocalCatMovie === null ) {
                 paramLocalCatMovie = [
                     "1","1","1","1","1","1","1"
                 ]

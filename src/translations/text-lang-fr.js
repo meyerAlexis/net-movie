@@ -39,6 +39,8 @@ const textHome_fr = {
     homeErrorCatChoice1 : "Au moins ",
     homeErrorCatChoice2 : " catégories doivent être sélectionné",
 
+    homeBrowerKo : "Votre navigateur ne prend pas en charge la balise vidéo.",
+
     featuredPoints : "points",
     featuredSeasons : "saison",
     featuredWatch : "Regardez",

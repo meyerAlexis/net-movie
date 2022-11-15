@@ -4,15 +4,16 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import { makeStyles } from "@material-ui/core/styles";
 import IconButton from '@mui/material/IconButton';
+
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
 import movie1 from "../movie/sample-5s.mp4";
 import movie2 from "../movie/sample-10s.mp4";
 import movie3 from "../movie/sample-15s.mp4";
 
 
-export default function MovieRow({ title, items, paramLocal }) {
+export default function MovieRow({ title, items, paramLocal, text }) {
     const [choiceMovie, setChoiceMovie] = useState(movie1);
     const [movieCoverGrey, setMovieCoverGrey] = useState("0");
 
@@ -41,17 +42,16 @@ export default function MovieRow({ title, items, paramLocal }) {
     }
 
     useEffect(() => {
-        const LoadAll = async () => {
-            setMovieCoverGrey(await paramLocal.getParamMovieCoverGrey());
-        }
-        LoadAll();
-
-
         //Select random movie
         let tabMovie = [
             movie1, movie2, movie3
         ]
         setChoiceMovie(tabMovie[getRandomInt(3)]);
+
+        const LoadAll = async () => {
+            setMovieCoverGrey(await paramLocal.getParamMovieCoverGrey());
+        }
+        LoadAll();
     }, []);
 
     useEffect(() => {
@@ -94,20 +94,21 @@ export default function MovieRow({ title, items, paramLocal }) {
                                 <IconButton
                                     onClick={() => { setShowMovie(false) }}
                                     sx={{
-                                        color: "white",                                        
+                                        color: "white",
                                         "&:hover": {
                                             cursor: "pointer",
                                             opacity: "0.8",
-                                            color:" #ff0000",
+                                            color: " #ff0000",
                                             cursor: "default"
                                         }
                                     }}>
-                                    <HighlightOffIcon sx={{fontSize:"40px" }}/>
+                                    <HighlightOffIcon sx={{ fontSize: "40px" }} />
                                 </IconButton>
 
-                                <video width="75%" height="55%" className='video' controls poster={`https://image.tmdb.org/t/p/w1280${movieData.poster_path}`}>
+                                <video title={movieData.title} width="75%" height="55%" className='video' controls poster={`https://image.tmdb.org/t/p/w1280${movieData.poster_path}`}>
+                                    <PlayCircleIcon/>
                                     <source src={choiceMovie} type="video/mp4" />
-                                    Your browser does not support the video tag.
+                                    {text.browerKo}
                                 </video>
 
                                 <h4>

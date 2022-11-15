@@ -90,7 +90,7 @@ export default function Header({ black, text, paramLocal }) {
                     romance: convertChoiceCat(paramLocalCatMovie[6]),
                     documentary: convertChoiceCat(paramLocalCatMovie[7]),
                 }
-                //setState(objLocalCatMovie);
+                setState(objLocalCatMovie);
 
             } catch (error) {
                 setState( {

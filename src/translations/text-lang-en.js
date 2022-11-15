@@ -39,6 +39,8 @@ const textHome_en = {
     homeErrorCatChoice1 : "At least ",
     homeErrorCatChoice2 : " categories must be selected",
 
+    homeBrowerKo : "Your browser does not support the video tag.",
+
     featuredPoints : "points",
     featuredSeasons : "season",
     featuredWatch : "Watch",
