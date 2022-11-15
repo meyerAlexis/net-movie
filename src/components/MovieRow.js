@@ -3,12 +3,18 @@ import '../styles/MovieRow.css';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { makeStyles } from "@material-ui/core/styles";
+import IconButton from '@mui/material/IconButton';
+
+import movie1 from "../movie/sample-5s.mp4";
+import movie2 from "../movie/sample-10s.mp4";
+import movie3 from "../movie/sample-15s.mp4";
+
 
 export default function MovieRow({ title, items, paramLocal }) {
+    const [choiceMovie, setChoiceMovie] = useState(movie1);
     const [movieCoverGrey, setMovieCoverGrey] = useState("0");
-    const [styleIco, setStyleIco] = useState();
 
     const [showMovie, setShowMovie] = useState(false);
     const [movieData, setMovieData] = useState();
@@ -30,28 +36,22 @@ export default function MovieRow({ title, items, paramLocal }) {
         setScrollx(x);
     }
 
-
-    const [hover, setHover] = useState(false);
-    const onHover = () => {
-        setHover(true);
-    };
-
-    const onLeave = () => {
-        setHover(false);
-    };
+    const getRandomInt = (max) => {
+        return Math.floor(Math.random() * max);
+    }
 
     useEffect(() => {
         const LoadAll = async () => {
             setMovieCoverGrey(await paramLocal.getParamMovieCoverGrey());
-            //let marginTop = ("-"+ Math.round(window.innerWidth * 0.3) + "px");
-
         }
         LoadAll();
 
-        setStyleIco({
-            float: "left", display: "block", fontSize: "120px",
-            marginLeft: "45%", marginTop: "-28%", position: "relative"
-        });
+
+        //Select random movie
+        let tabMovie = [
+            movie1, movie2, movie3
+        ]
+        setChoiceMovie(tabMovie[getRandomInt(3)]);
     }, []);
 
     useEffect(() => {
@@ -73,7 +73,8 @@ export default function MovieRow({ title, items, paramLocal }) {
                 }}>
                     {items.results.length > 0 && items.results.map((item, key) => (
                         <div key={key} className="movieRow--item">
-                            <img className={movieCoverGrey === "1" ? "grey" : "color"} src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} alt={item.original_title}
+                            <img className={movieCoverGrey === "1" ? "grey" : "color"} key={item.key}
+                                title={item.title} src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} alt={item.original_title}
                                 onClick={() => {
                                     if (movieData !== item) {
                                         setShowMovie(true);
@@ -87,20 +88,32 @@ export default function MovieRow({ title, items, paramLocal }) {
                     ))}
 
                     {showMovie ?
-                        <div id="detail-movie" onClick={() => { setShowMovie(false) }}>
+                        <div id="detail-movie" >
                             <article>
 
-                                <img src={`https://image.tmdb.org/t/p/w1280${movieData.poster_path}`} alt={movieData.original_title} />
+                                <IconButton
+                                    onClick={() => { setShowMovie(false) }}
+                                    sx={{
+                                        color: "white",                                        
+                                        "&:hover": {
+                                            cursor: "pointer",
+                                            opacity: "0.8",
+                                            color:" #ff0000",
+                                            cursor: "default"
+                                        }
+                                    }}>
+                                    <HighlightOffIcon sx={{fontSize:"40px" }}/>
+                                </IconButton>
 
-                                <div onMouseEnter={onHover}
-                                    onMouseLeave={onLeave} 
-                                    role="button"
-                                    tabIndex="-3">
-                                    {hover ? <PlayCircleOutlineIcon sx={styleIco}/> : <PlayCircleFilledWhiteIcon sx={styleIco}/>}
-                                </div>
+                                <video width="75%" height="55%" className='video' controls poster={`https://image.tmdb.org/t/p/w1280${movieData.poster_path}`}>
+                                    <source src={choiceMovie} type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+
                                 <h4>
-                                    {movieData.overview}
+                                    {movieData.overview !== "" ? movieData.overview : "Description de la vidéo"}
                                 </h4>
+
                             </article>
                         </div>
 

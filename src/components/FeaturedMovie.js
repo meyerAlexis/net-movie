@@ -32,7 +32,7 @@ export default function FeaturedMovie({ item, lang }) {
                     <div className='featured--info'>
                         <div className='featured--points'>{item.vote_average} {lang.featuredPoints}</div>
                         <div className='featured--year'>{firstdate.getFullYear()}</div>
-                        <div className='featured--seasons'>{item.number_of_seasons} {lang.featuredSeasons} {item.number_of_seasons !== 1 ? 's' : ''}</div>
+                        <div className='featured--seasons'>{item.number_of_seasons} {lang.featuredSeasons}{item.number_of_seasons !== 1 ? 's' : ''}</div>
                         <div className='featured--description'>{description}</div>
                         <div className='featured--buttons'>
                             <a href={`/wath/${item.id}`} className='featured--watchbutton'>▶ {lang.featuredWatch}</a>
