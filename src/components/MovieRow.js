@@ -92,6 +92,7 @@ export default function MovieRow({ title, items, paramLocal, text }) {
                             <article>
 
                                 <IconButton
+                                    className='closeDetail'
                                     onClick={() => { setShowMovie(false) }}
                                     sx={{
                                         color: "white",
@@ -106,7 +107,7 @@ export default function MovieRow({ title, items, paramLocal, text }) {
                                 </IconButton>
 
                                 <video title={movieData.title} width="75%" height="55%" className='video' controls poster={`https://image.tmdb.org/t/p/w1280${movieData.poster_path}`}>
-                                    <PlayCircleIcon/>
+                                    <PlayCircleIcon />
                                     <source src={choiceMovie} type="video/mp4" />
                                     {text.browerKo}
                                 </video>

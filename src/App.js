@@ -15,7 +15,7 @@ import ParamLocal from './class/ParamLocal';
 
 import loader from "./img/loader.gif"
 
-export default () => {
+export default function App() {
 
   const [paramLocal, setParamLocal] = useState(new ParamLocal());
   const [movieList, setMovieList] = useState([]);
@@ -27,16 +27,17 @@ export default () => {
   useEffect(() => {
     const LoadAll = async () => {
       try {
+        const classTmdb = new Tmdb();
         lang.setLang(await paramLocal.getParamLang())
         // getting the full list of movies
-        let list = await Tmdb.getHomeList(lang.getLangCode(), lang.getHome(), paramLocal);
+        let list = await classTmdb.getHomeList(lang.getLangCode(), lang.getHome(), paramLocal);
         setMovieList(list);
 
         //getting the Featured
-        let originals = await Tmdb.getOriginal(lang.getLangCode(), lang.getHome());
+        let originals = await classTmdb.getOriginal(lang.getLangCode(), lang.getHome());
         let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
         let chosen = originals[0].items.results[randomChosen];
-        let chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv', lang.getLangCode());
+        let chosenInfo = await classTmdb.getMovieInfo(chosen.id, 'tv', lang.getLangCode());
         setFeaturedData(chosenInfo);
 
       } catch (error) {

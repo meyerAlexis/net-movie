@@ -6,7 +6,7 @@ const basicFetch = async (endpoint) => {
     const req = await fetch(`${API_BASE}${endpoint}`)
     return await req.json();
 }
-export default {
+export default class Tmdb {
 
     /**
      * Get movie with category original only
@@ -14,7 +14,7 @@ export default {
      * @param {*} text 
      * @returns 
      */
-    getOriginal: async (langCode, text) => {
+    getOriginal = async (langCode, text) => {
         return [
             {
                 slug: 'originals',
@@ -23,7 +23,7 @@ export default {
             }
         ];
 
-    },
+    };
 
     /**
      * 
@@ -31,7 +31,7 @@ export default {
      * @param {*} text Text of lang site
      * @returns 
      */
-    getHomeList: async (langCode, text, paramLocal) => {
+    getHomeList =  async (langCode, text, paramLocal) => {
 
         let paramLocalCatMovie = JSON.parse(await paramLocal.getParamCatMovie());
         let listHomeCat = [];
@@ -112,8 +112,9 @@ export default {
 
         return listHomeCat
 
-    },
-    getMovieInfo: async (movieId, type, langCode) => {
+    };
+
+    getMovieInfo = async (movieId, type, langCode) => {
         let info = {};
 
         if (movieId) {

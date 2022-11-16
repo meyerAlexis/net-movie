@@ -24,3 +24,18 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+@media (min-width:250px) and (max-width:759px){
+
+    .lists {
+        margin-top: -16px;
+        overflow: hidden;
+    }
+}
+
+@media (max-width:1200px){
+    .lists {
+        overflow: hidden;
+    }
+
+}
